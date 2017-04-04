@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	public static void main(String[] args) {launch(args);}
+	
+	ArrayList<String> QuestionList;
+	VBox vbMain = new VBox();
+	HBox hbScore = new HBox();
+	GridPane gpAnswers = new GridPane();
+	int Score = 0;
+	String sScore = String.format("%,0f", Score);
+	String Difficulty;
+	Label lbScore = new Label(sScore);
+	Label Question = new Label();
+	Button Hint = new Button("Click here for a hint");
+	Label lbHint = new Label();
+	Button rightAnswer = new Button();
+	Button wrongAnswer1 = new Button();
+	Button wrongAnswer2 = new Button();
+	Button wrongAnswer3 = new Button();
+	
+	VBox vbWrong = new VBox();
+	Label endScore = new Label();
+	Label end = new Label();
+	Button newgame = new Button("Play again?");
+		
+
+	public void start(Stage window) 
+	{
+		
+	}
+}
