@@ -1,41 +1,78 @@
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
 	public static void main(String[] args) {launch(args);}
-	
+
 	ArrayList<String> QuestionList;
 	VBox vbMain = new VBox();
 	HBox hbScore = new HBox();
 	GridPane gpAnswers = new GridPane();
 	int Score = 0;
-	String sScore = String.format("%,0f", Score);
-	String Difficulty;
-	Label lbScore = new Label(sScore);
-	Label Question = new Label();
+	String Difficulty = "Easy";
+	Label lbDifficulty = new Label(Difficulty);
+	Color DiffColour = Color.LIGHTGREEN;
+	Label lbScore = new Label("Your score is: " + Score);
+	Label Question = new Label("fklasgfkjasdgfkjasgfaskadkjfgasdkjfgasdjkfASKJHFGASD");
 	Button Hint = new Button("Click here for a hint");
 	Label lbHint = new Label();
-	Button rightAnswer = new Button();
+	Button rightAnswer = new Button("LUL TEXT WTF OMG");
 	Button wrongAnswer1 = new Button();
 	Button wrongAnswer2 = new Button();
 	Button wrongAnswer3 = new Button();
-	
+	Button nextQuest = new Button("Do you want to proced to the next question");
+
 	VBox vbWrong = new VBox();
 	Label endScore = new Label();
 	Label end = new Label();
 	Button newgame = new Button("Play again?");
-		
 
 	public void start(Stage window) 
 	{
+		rightAnswer.setMinSize(150, 30); rightAnswer.setFont(Font.font("Comic Sans MS", 14));
+		wrongAnswer1.setMinSize(150, 30); wrongAnswer1.setFont(Font.font("Comic Sans MS", 14));
+		wrongAnswer2.setMinSize(150, 30); wrongAnswer2.setFont(Font.font("Comic Sans MS", 14));
+		wrongAnswer3.setMinSize(150, 30); wrongAnswer3.setFont(Font.font("Comic Sans MS", 14));
+		Hint.setFont(Font.font("Comic Sans MS", 14));
+		lbScore.setFont(Font.font("Comic Sans MS", 16)); lbScore.setTextFill(Color.WHITE);
+		lbDifficulty.setFont(Font.font("Comic Sans MS", 16)); lbDifficulty.setTextFill(DiffColour);
+		Question.setFont(Font.font("Comic Sans MS", 20)); Question.setTextFill(Color.WHITE);
 		
+		gpAnswers.setAlignment(Pos.CENTER);
+		gpAnswers.setHgap(50);
+		gpAnswers.setVgap(50);
+		
+		hbScore.setAlignment(Pos.CENTER);
+		hbScore.setSpacing(500);
+		hbScore.getChildren().addAll(lbScore, lbDifficulty);
+		
+		gpAnswers.add(wrongAnswer1, 0, 0);
+		gpAnswers.add(wrongAnswer2, 0, 1);
+		gpAnswers.add(wrongAnswer3, 1, 0);
+		gpAnswers.add(rightAnswer, 1, 1);
+		
+		vbMain.setBackground(null);
+		vbMain.setAlignment(Pos.CENTER);
+		vbMain.setSpacing(25);
+
+		vbMain.getChildren().addAll(Question, gpAnswers, Hint, hbScore);
+		Scene scMain = new Scene(vbMain, 1000, 680);
+		scMain.setFill(Color.DARKBLUE);
+
+		window.setScene(scMain);
+		window.setResizable(false);
+		window.show();
 	}
 }
