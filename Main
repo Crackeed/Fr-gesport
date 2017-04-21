@@ -16,7 +16,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {launch(args);}
 
-	ArrayList<String> QuestionList;
+	static QuestionList QuestionList = new QuestionList();
 	VBox vbMain = new VBox();
 	HBox hbScore = new HBox();
 	GridPane gpAnswers = new GridPane();
@@ -25,13 +25,13 @@ public class Main extends Application {
 	Label lbDifficulty = new Label(Difficulty);
 	Color DiffColour = Color.LIGHTGREEN;
 	Label lbScore = new Label("Your score is: " + Score);
-	Label Question = new Label("fklasgfkjasdgfkjasgfaskadkjfgasdkjfgasdjkfASKJHFGASD");
+	Label Question = new Label("Impact");
 	Button Hint = new Button("Click here for a hint");
 	Label lbHint = new Label();
-	Button rightAnswer = new Button("LUL TEXT WTF OMG");
-	Button wrongAnswer1 = new Button();
-	Button wrongAnswer2 = new Button();
-	Button wrongAnswer3 = new Button();
+	Button rightAnswer = new Button("Motherland");
+	Button wrongAnswer1 = new Button("Calibri");
+	Button wrongAnswer2 = new Button("Stencil");
+	Button wrongAnswer3 = new Button("Txt");
 	Button nextQuest = new Button("Do you want to proced to the next question");
 
 	VBox vbWrong = new VBox();
@@ -41,14 +41,14 @@ public class Main extends Application {
 
 	public void start(Stage window) 
 	{
-		rightAnswer.setMinSize(150, 30); rightAnswer.setFont(Font.font("Comic Sans MS", 14));
-		wrongAnswer1.setMinSize(150, 30); wrongAnswer1.setFont(Font.font("Comic Sans MS", 14));
-		wrongAnswer2.setMinSize(150, 30); wrongAnswer2.setFont(Font.font("Comic Sans MS", 14));
-		wrongAnswer3.setMinSize(150, 30); wrongAnswer3.setFont(Font.font("Comic Sans MS", 14));
-		Hint.setFont(Font.font("Comic Sans MS", 14));
+		rightAnswer.setMinSize(180, 30); rightAnswer.setFont(Font.font("Motherland", 14));
+		wrongAnswer1.setMinSize(180, 30); wrongAnswer1.setFont(Font.font("Calibri", 14));
+		wrongAnswer2.setMinSize(180, 30); wrongAnswer2.setFont(Font.font("Stencil", 14));
+		wrongAnswer3.setMinSize(180, 30); wrongAnswer3.setFont(Font.font("Txt", 14));
+		Hint.setFont(Font.font("Algerian", 14));
 		lbScore.setFont(Font.font("Comic Sans MS", 16)); lbScore.setTextFill(Color.WHITE);
 		lbDifficulty.setFont(Font.font("Comic Sans MS", 16)); lbDifficulty.setTextFill(DiffColour);
-		Question.setFont(Font.font("Comic Sans MS", 20)); Question.setTextFill(Color.WHITE);
+		Question.setFont(Font.font("Impact", 20)); Question.setTextFill(Color.WHITE);
 		
 		gpAnswers.setAlignment(Pos.CENTER);
 		gpAnswers.setHgap(50);
@@ -74,5 +74,21 @@ public class Main extends Application {
 		window.setScene(scMain);
 		window.setResizable(false);
 		window.show();
+	}
+	
+	private static void getNewQuestion()
+	{
+		
+		int iRandom = (int) Math.random() * QuestionList.getLength();
+	}
+	
+	private void addQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		QuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void nextQuestion(int number)
+	{
+		Question.setText("");
 	}
 }
