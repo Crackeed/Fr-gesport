@@ -7,8 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -17,22 +19,46 @@ public class Main extends Application {
 	public static void main(String[] args) {launch(args);}
 
 	static QuestionList QuestionList = new QuestionList();
+
 	VBox vbMain = new VBox();
 	HBox hbScore = new HBox();
 	GridPane gpAnswers = new GridPane();
+
 	int Score = 0;
 	String Difficulty = "Easy";
 	Label lbDifficulty = new Label(Difficulty);
-	Color DiffColour = Color.LIGHTGREEN;
+	Color DiffColour = Color.LIGHTGREEN;	
 	Label lbScore = new Label("Your score is: " + Score);
-	Label Question = new Label("Impact");
-	Button Hint = new Button("Click here for a hint");
+
+	static Label Question = new Label("Impact");
+	Rectangle baQuestion = new Rectangle(500, 100);
+	StackPane spQuestion = new StackPane();
+
+	Rectangle reHint = new Rectangle(180, 30);
+	Label lbBHint = new Label("Click here for a hint");
+	StackPane spHint = new StackPane();
 	Label lbHint = new Label();
-	Button rightAnswer = new Button("Motherland");
-	Button wrongAnswer1 = new Button("Calibri");
-	Button wrongAnswer2 = new Button("Stencil");
-	Button wrongAnswer3 = new Button("Txt");
-	Button nextQuest = new Button("Do you want to proced to the next question");
+
+	Rectangle reRAnswer = new Rectangle(180, 30);
+	Label lbRAnswer = new Label("MOTHERLAND");
+	StackPane spRAnswer = new StackPane();
+	int ifClick = 0;
+
+	Rectangle reWAnswer1 = new Rectangle(180, 30);
+	Label lbWAnswer1 = new Label("TEEESST");
+	StackPane spWAnswer1 = new StackPane();
+
+	Rectangle reWAnswer2 = new Rectangle(180, 30);
+	Label lbWAnswer2 = new Label("TEEESST");
+	StackPane spWAnswer2 = new StackPane();
+
+	Rectangle reWAnswer3 = new Rectangle(180, 30);
+	Label lbWAnswer3 = new Label("TEEESST");
+	StackPane spWAnswer3 = new StackPane();
+
+	Rectangle reNextQuest = new Rectangle(500, 30);
+	Label lbNextQuest = new Label("Do you wish to proced to the next question");
+	StackPane spNextQuest = new StackPane();
 
 	VBox vbWrong = new VBox();
 	Label endScore = new Label();
@@ -41,54 +67,112 @@ public class Main extends Application {
 
 	public void start(Stage window) 
 	{
-		rightAnswer.setMinSize(180, 30); rightAnswer.setFont(Font.font("Motherland", 14));
-		wrongAnswer1.setMinSize(180, 30); wrongAnswer1.setFont(Font.font("Calibri", 14));
-		wrongAnswer2.setMinSize(180, 30); wrongAnswer2.setFont(Font.font("Stencil", 14));
-		wrongAnswer3.setMinSize(180, 30); wrongAnswer3.setFont(Font.font("Txt", 14));
-		Hint.setFont(Font.font("Algerian", 14));
-		lbScore.setFont(Font.font("Comic Sans MS", 16)); lbScore.setTextFill(Color.WHITE);
-		lbDifficulty.setFont(Font.font("Comic Sans MS", 16)); lbDifficulty.setTextFill(DiffColour);
-		Question.setFont(Font.font("Impact", 20)); Question.setTextFill(Color.WHITE);
-		
+		lbRAnswer.setFont(Font.font("Stencil", 14));
+		lbWAnswer1.setFont(Font.font("Stencil", 14));
+		lbWAnswer2.setFont(Font.font("Stencil", 14));
+		lbWAnswer3.setFont(Font.font("Stencil", 14));
+		lbBHint.setFont(Font.font("Stencil", 14));
+		lbScore.setFont(Font.font("Stencil", 16)); lbScore.setTextFill(Color.WHITE);
+		lbDifficulty.setFont(Font.font("Stencil", 16)); lbDifficulty.setTextFill(DiffColour);
+		Question.setFont(Font.font("Stencil", 20)); Question.setTextFill(Color.BLACK);
+		lbNextQuest.setFont(Font.font("Stencil", 20)); 
+
 		gpAnswers.setAlignment(Pos.CENTER);
 		gpAnswers.setHgap(50);
 		gpAnswers.setVgap(50);
-		
+
+		baQuestion.setFill(Color.LIGHTGRAY);
+		reRAnswer.setFill(Color.LIGHTGRAY);
+		reWAnswer1.setFill(Color.LIGHTGRAY);
+		reWAnswer2.setFill(Color.LIGHTGRAY);
+		reWAnswer3.setFill(Color.LIGHTGRAY);
+		reHint.setFill(Color.LIGHTGRAY);
+		reNextQuest.setFill(Color.LIGHTGRAY);
+
+		spQuestion.getChildren().addAll(baQuestion, Question);
+		spRAnswer.getChildren().addAll(reRAnswer, lbRAnswer);
+		spWAnswer1.getChildren().addAll(reWAnswer1, lbWAnswer1);
+		spWAnswer2.getChildren().addAll(reWAnswer2, lbWAnswer2);
+		spWAnswer3.getChildren().addAll(reWAnswer3, lbWAnswer3);
+		spHint.getChildren().addAll(reHint, lbBHint);
+		spNextQuest.getChildren().addAll(reNextQuest, lbNextQuest); spNextQuest.setOpacity(0);
+
 		hbScore.setAlignment(Pos.CENTER);
 		hbScore.setSpacing(500);
 		hbScore.getChildren().addAll(lbScore, lbDifficulty);
-		
-		gpAnswers.add(wrongAnswer1, 0, 0);
-		gpAnswers.add(wrongAnswer2, 0, 1);
-		gpAnswers.add(wrongAnswer3, 1, 0);
-		gpAnswers.add(rightAnswer, 1, 1);
-		
+
+		gpAnswers.add(spWAnswer1, 0, 0);
+		gpAnswers.add(spWAnswer2, 0, 1);
+		gpAnswers.add(spWAnswer3, 1, 0);
+		gpAnswers.add(spRAnswer, 1, 1);
+
 		vbMain.setBackground(null);
 		vbMain.setAlignment(Pos.CENTER);
-		vbMain.setSpacing(25);
+		vbMain.setSpacing(35);
 
-		vbMain.getChildren().addAll(Question, gpAnswers, Hint, hbScore);
+		vbMain.getChildren().addAll(spQuestion, gpAnswers, spHint, spNextQuest, hbScore);
 		Scene scMain = new Scene(vbMain, 1000, 680);
 		scMain.setFill(Color.DARKBLUE);
 
 		window.setScene(scMain);
 		window.setResizable(false);
 		window.show();
+
+		spRAnswer.setOnMouseClicked(e->
+		{
+			if(ifClick == 0)
+			{
+				ifClick++;
+				Score++;
+				lbScore.setText("Your score is: " + Score);
+
+				reRAnswer.setFill(Color.GREEN.brighter());
+				reWAnswer1.setFill(Color.RED);
+				reWAnswer2.setFill(Color.RED);
+				reWAnswer3.setFill(Color.RED);
+
+				java.awt.Toolkit.getDefaultToolkit().beep();
+
+				spNextQuest.setOpacity(100);
+			}
+		});
+
+		spHint.setOnMouseClicked(e->
+		{
+			lbBHint.setText("THIS IS HINT");
+		});
+		
+		spNextQuest.setOnMouseClicked(e->
+		{
+			ifClick = 0;
+			spNextQuest.setOpacity(0);
+			reRAnswer.setFill(Color.LIGHTGRAY);
+			reWAnswer1.setFill(Color.LIGHTGRAY);
+			reWAnswer2.setFill(Color.LIGHTGRAY);
+			reWAnswer3.setFill(Color.LIGHTGRAY);
+			
+			getNewQuestion();
+		});
+
+		addQuestion("Hej?", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
+		addQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
+		
 	}
-	
+
 	private static void getNewQuestion()
 	{
-		
+
 		int iRandom = (int) Math.random() * QuestionList.getLength();
+		nextQuestion(iRandom);
 	}
-	
+
 	private void addQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		QuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
-	private void nextQuestion(int number)
+
+	private static void nextQuestion(int number)
 	{
-		Question.setText("");
+		Question.setText(Question.getText());
 	}
 }
