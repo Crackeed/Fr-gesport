@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -20,6 +22,12 @@ public class Main extends Application {
 
 	static QuestionList easyQuestionList = new QuestionList();
 	static QuestionList mediumQuestionList = new QuestionList();
+	static QuestionList difficultQuestionList = new QuestionList();
+	static QuestionList hardQuestionList = new QuestionList();
+	static QuestionList veryhardQuestionList = new QuestionList();
+	static QuestionList expertQuestionList = new QuestionList();
+	static QuestionList impossibleQuestionList = new QuestionList();
+	static QuestionList lolnopeQuestionList = new QuestionList();
 
 	VBox vbMain = new VBox();
 	HBox hbScore = new HBox();
@@ -31,9 +39,10 @@ public class Main extends Application {
 	static Label empty4 = new Label("Empty");
 
 	static int Score = 0;
+	static int iDiff = 0;
 	static String Difficulty = "Easy";
 	static Label lbDifficulty = new Label(Difficulty);
-	static Color DiffColour = Color.LIGHTGREEN;	
+	static Color DiffColour = Color.rgb(0, 255, 0);	
 	static Label lbScore = new Label("Your score is: " + Score);
 
 	static Label Question = new Label();
@@ -73,7 +82,7 @@ public class Main extends Application {
 
 	public void start(Stage window) 
 	{		
-		addMediumQuestion("Hej?", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
+		addMediumQuestion("Fråga1", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
 		addMediumQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
 		
 		lbRAnswer.setFont(Font.font("Stencil", 14));
@@ -122,6 +131,11 @@ public class Main extends Application {
 
 		window.setScene(scMain);
 		window.setResizable(false);
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		window.setX(primaryScreenBounds.getMinX());
+		window.setY(primaryScreenBounds.getMinY());
+		window.setWidth(primaryScreenBounds.getWidth());
+		window.setHeight(primaryScreenBounds.getHeight());
 		window.show();
 
 		spRAnswer.setOnMouseClicked(e->
@@ -131,6 +145,53 @@ public class Main extends Application {
 				ifClick++;
 				Score++;
 				lbScore.setText("Your score is: " + Score);
+				
+				if(Score % 5 == 0)
+					iDiff++;
+				
+				if(iDiff == 1)
+				{
+					lbDifficulty.setText("Medium");
+					DiffColour = Color.rgb(36, 219, 1);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 2)
+				{
+					lbDifficulty.setText("Difficult");
+					DiffColour = Color.rgb(73, 182, 2);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 3)
+				{
+					lbDifficulty.setText("Hard");
+					DiffColour = Color.rgb(109, 146, 3);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 4)
+				{
+					lbDifficulty.setText("Very Hard");
+					DiffColour = Color.rgb(146, 109, 4);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 5)
+				{
+					lbDifficulty.setText("Expert");
+					DiffColour = Color.rgb(182, 73, 5);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 6)
+				{
+					lbDifficulty.setText("Impossible");
+					DiffColour = Color.rgb(219, 36, 6);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+				if(iDiff == 7)
+				{
+					lbDifficulty.setText("LolNope");
+					DiffColour = Color.rgb(255, 0, 7);
+					lbDifficulty.setTextFill(DiffColour);
+				}
+					
 
 				reRAnswer.setFill(Color.GREEN.brighter());
 				reWAnswer1.setFill(Color.RED);
@@ -142,7 +203,7 @@ public class Main extends Application {
 				spNextQuest.setOpacity(100);
 			}
 		});
-
+		
 		spHint.setOnMouseClicked(e->
 		{
 			lbBHint.setText(mediumQuestionList.getQuestion(iRandom).getHint());
@@ -159,15 +220,11 @@ public class Main extends Application {
 			
 			getNewQuestion();
 		});
-
 	}
 
 	private static void getNewQuestion()
-	{
-		gpAnswers.add(empty1, 0, 0);
-		gpAnswers.add(empty2, 0, 1);
-		gpAnswers.add(empty3, 1, 0);
-		gpAnswers.add(empty4, 1, 1);
+	{		
+		gpAnswers.getChildren().removeAll(spRAnswer, spWAnswer1, spWAnswer2, spWAnswer3);
 		
 		iRandom = (int) (Math.random() * mediumQuestionList.getLength());
 		Question.setText(mediumQuestionList.getQuestion(iRandom).getQuestion());
@@ -239,8 +296,43 @@ public class Main extends Application {
 		
 	}
 
+	private void addEasyQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		easyQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
 	private void addMediumQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		mediumQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addDifficultQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		difficultQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addHardQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		hardQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addVeryhardQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		veryhardQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addExpertQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		expertQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addImpossibleQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		impossibleQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
+	}
+	
+	private void addLolnopeQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	{
+		lolnopeQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
 }
