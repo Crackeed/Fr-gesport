@@ -18,47 +18,53 @@ public class Main extends Application {
 
 	public static void main(String[] args) {launch(args);}
 
-	static QuestionList QuestionList = new QuestionList();
+	static QuestionList easyQuestionList = new QuestionList();
+	static QuestionList mediumQuestionList = new QuestionList();
 
 	VBox vbMain = new VBox();
 	HBox hbScore = new HBox();
-	GridPane gpAnswers = new GridPane();
+	static GridPane gpAnswers = new GridPane();
+	static int iRandom = 0;
+	static Label empty1 = new Label("Empty");
+	static Label empty2 = new Label("Empty");
+	static Label empty3 = new Label("Empty");
+	static Label empty4 = new Label("Empty");
 
-	int Score = 0;
-	String Difficulty = "Easy";
-	Label lbDifficulty = new Label(Difficulty);
-	Color DiffColour = Color.LIGHTGREEN;	
-	Label lbScore = new Label("Your score is: " + Score);
+	static int Score = 0;
+	static String Difficulty = "Easy";
+	static Label lbDifficulty = new Label(Difficulty);
+	static Color DiffColour = Color.LIGHTGREEN;	
+	static Label lbScore = new Label("Your score is: " + Score);
 
-	static Label Question = new Label("Impact");
+	static Label Question = new Label();
 	Rectangle baQuestion = new Rectangle(500, 100);
-	StackPane spQuestion = new StackPane();
+	static StackPane spQuestion = new StackPane();
 
 	Rectangle reHint = new Rectangle(180, 30);
-	Label lbBHint = new Label("Click here for a hint");
-	StackPane spHint = new StackPane();
+	static Label lbBHint = new Label("Click here for a hint");
+	static StackPane spHint = new StackPane();
 	Label lbHint = new Label();
 
 	Rectangle reRAnswer = new Rectangle(180, 30);
-	Label lbRAnswer = new Label("MOTHERLAND");
-	StackPane spRAnswer = new StackPane();
+	static Label lbRAnswer = new Label();
+	static StackPane spRAnswer = new StackPane();
 	int ifClick = 0;
 
 	Rectangle reWAnswer1 = new Rectangle(180, 30);
-	Label lbWAnswer1 = new Label("TEEESST");
-	StackPane spWAnswer1 = new StackPane();
+	static Label lbWAnswer1 = new Label();
+	static StackPane spWAnswer1 = new StackPane();
 
 	Rectangle reWAnswer2 = new Rectangle(180, 30);
-	Label lbWAnswer2 = new Label("TEEESST");
-	StackPane spWAnswer2 = new StackPane();
+	static Label lbWAnswer2 = new Label();
+	static StackPane spWAnswer2 = new StackPane();
 
 	Rectangle reWAnswer3 = new Rectangle(180, 30);
-	Label lbWAnswer3 = new Label("TEEESST");
-	StackPane spWAnswer3 = new StackPane();
+	static Label lbWAnswer3 = new Label();
+	static StackPane spWAnswer3 = new StackPane();
 
 	Rectangle reNextQuest = new Rectangle(500, 30);
-	Label lbNextQuest = new Label("Do you wish to proced to the next question");
-	StackPane spNextQuest = new StackPane();
+	final Label lbNextQuest = new Label("Do you wish to proced to the next question");
+	static StackPane spNextQuest = new StackPane();
 
 	VBox vbWrong = new VBox();
 	Label endScore = new Label();
@@ -66,7 +72,10 @@ public class Main extends Application {
 	Button newgame = new Button("Play again?");
 
 	public void start(Stage window) 
-	{
+	{		
+		addMediumQuestion("Hej?", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
+		addMediumQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
+		
 		lbRAnswer.setFont(Font.font("Stencil", 14));
 		lbWAnswer1.setFont(Font.font("Stencil", 14));
 		lbWAnswer2.setFont(Font.font("Stencil", 14));
@@ -101,11 +110,6 @@ public class Main extends Application {
 		hbScore.setSpacing(500);
 		hbScore.getChildren().addAll(lbScore, lbDifficulty);
 
-		gpAnswers.add(spWAnswer1, 0, 0);
-		gpAnswers.add(spWAnswer2, 0, 1);
-		gpAnswers.add(spWAnswer3, 1, 0);
-		gpAnswers.add(spRAnswer, 1, 1);
-
 		vbMain.setBackground(null);
 		vbMain.setAlignment(Pos.CENTER);
 		vbMain.setSpacing(35);
@@ -113,6 +117,8 @@ public class Main extends Application {
 		vbMain.getChildren().addAll(spQuestion, gpAnswers, spHint, spNextQuest, hbScore);
 		Scene scMain = new Scene(vbMain, 1000, 680);
 		scMain.setFill(Color.DARKBLUE);
+		
+		getNewQuestion();
 
 		window.setScene(scMain);
 		window.setResizable(false);
@@ -139,7 +145,7 @@ public class Main extends Application {
 
 		spHint.setOnMouseClicked(e->
 		{
-			lbBHint.setText("THIS IS HINT");
+			lbBHint.setText(mediumQuestionList.getQuestion(iRandom).getHint());
 		});
 		
 		spNextQuest.setOnMouseClicked(e->
@@ -154,25 +160,87 @@ public class Main extends Application {
 			getNewQuestion();
 		});
 
-		addQuestion("Hej?", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
-		addQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
-		
 	}
 
 	private static void getNewQuestion()
 	{
-
-		int iRandom = (int) Math.random() * QuestionList.getLength();
-		nextQuestion(iRandom);
+		gpAnswers.add(empty1, 0, 0);
+		gpAnswers.add(empty2, 0, 1);
+		gpAnswers.add(empty3, 1, 0);
+		gpAnswers.add(empty4, 1, 1);
+		
+		iRandom = (int) (Math.random() * mediumQuestionList.getLength());
+		Question.setText(mediumQuestionList.getQuestion(iRandom).getQuestion());
+		lbBHint.setText("Click here for a hint");
+		lbRAnswer.setText(mediumQuestionList.getQuestion(iRandom).getCorrectAnswer());
+		lbWAnswer1.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer1());
+		lbWAnswer2.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer2());
+		lbWAnswer3.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer3());
+		
+		int iRAnswerpos = (int) (Math.random() * 4) + 1;
+		System.out.println(iRAnswerpos + " posR");
+		
+		int iWAnswerpos1 = (int) (Math.random() * 4) + 1;
+		while(iWAnswerpos1 == iRAnswerpos)
+		{
+			System.out.println(iWAnswerpos1 + " pos1");
+			iWAnswerpos1 = (int) (Math.random() * 4) + 1;
+		}
+		
+		int iWAnswerpos2 = (int) (Math.random() * 4) + 1;
+		while(iWAnswerpos2 == iRAnswerpos || iWAnswerpos2 == iWAnswerpos1)
+		{
+			System.out.println(iWAnswerpos2 + " pos2");
+			iWAnswerpos2 = (int) (Math.random() * 4) + 1;
+		}
+		
+		int iWAnswerpos3 = (int) (Math.random() * 4) + 1;
+		while(iWAnswerpos3 == iRAnswerpos || iWAnswerpos3 == iWAnswerpos1 || iWAnswerpos3 == iWAnswerpos2)
+		{
+			System.out.println(iWAnswerpos3 + " pos3");
+			iWAnswerpos3 = (int) (Math.random() * 4) + 1;
+		}
+		
+		if(iRAnswerpos == 1)
+			gpAnswers.add(spRAnswer, 0, 0);
+		if(iRAnswerpos == 2)
+			gpAnswers.add(spRAnswer, 0, 1);
+		if(iRAnswerpos == 3)
+			gpAnswers.add(spRAnswer, 1, 0);
+		if(iRAnswerpos == 4)
+			gpAnswers.add(spRAnswer, 1, 1);
+		
+		if(iWAnswerpos1 == 1)
+			gpAnswers.add(spWAnswer1, 0, 0);
+		if(iWAnswerpos1 == 2)
+			gpAnswers.add(spWAnswer1, 0, 1);
+		if(iWAnswerpos1 == 3)
+			gpAnswers.add(spWAnswer1, 1, 0);
+		if(iWAnswerpos1 == 4)
+			gpAnswers.add(spWAnswer1, 1, 1);
+		
+		if(iWAnswerpos2 == 1)
+			gpAnswers.add(spWAnswer2, 0, 0);
+		if(iWAnswerpos2 == 2)
+			gpAnswers.add(spWAnswer2, 0, 1);
+		if(iWAnswerpos2 == 3)
+			gpAnswers.add(spWAnswer2, 1, 0);
+		if(iWAnswerpos2 == 4)
+			gpAnswers.add(spWAnswer2, 1, 1);
+		
+		if(iWAnswerpos3 == 1)
+			gpAnswers.add(spWAnswer3, 0, 0);
+		if(iWAnswerpos3 == 2)
+			gpAnswers.add(spWAnswer3, 0, 1);
+		if(iWAnswerpos3 == 3)
+			gpAnswers.add(spWAnswer3, 1, 0);
+		if(iWAnswerpos3 == 4)
+			gpAnswers.add(spWAnswer3, 1, 1);
+		
 	}
 
-	private void addQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
+	private void addMediumQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
-		QuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
-	}
-
-	private static void nextQuestion(int number)
-	{
-		Question.setText(Question.getText());
+		mediumQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
 }
