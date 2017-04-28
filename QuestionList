@@ -2,30 +2,35 @@ import java.util.ArrayList;
 
 public class QuestionList 
 {
-	ArrayList<Question> Questions;
+	ArrayList<Question> questions;
 	
 	public QuestionList()
 	{
-		Questions = new ArrayList<Question>();
+		questions = new ArrayList<Question>();
 	}
 	
 	public void addQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
-		Questions.add(new Question(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint));
+		questions.add(new Question(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint));
 	}
 	
 	public int getLength()
 	{
-		return Questions.size();
+		return questions.size();
 	}
 
 	public ArrayList<Question> getQuestions() 
 	{
-		return Questions;
+		return questions;
 	}
 
 	public void setQuestions(ArrayList<Question> questions) 
 	{
-		Questions = questions;
+		questions = questions;
+	}
+	
+	public Question getQuestion(int number)
+	{
+		return questions.get(number);
 	}
 }
