@@ -82,8 +82,8 @@ public class Main extends Application {
 
 	public void start(Stage window) 
 	{		
-		addMediumQuestion("Fråga1", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
-		addMediumQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
+		addEasyQuestion("Fråga1", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
+		addEasyQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
 		
 		lbRAnswer.setFont(Font.font("Stencil", 14));
 		lbWAnswer1.setFont(Font.font("Stencil", 14));
@@ -206,7 +206,7 @@ public class Main extends Application {
 		
 		spHint.setOnMouseClicked(e->
 		{
-			lbBHint.setText(mediumQuestionList.getQuestion(iRandom).getHint());
+			lbBHint.setText(easyQuestionList.getQuestion(iRandom).getHint());
 		});
 		
 		spNextQuest.setOnMouseClicked(e->
@@ -226,12 +226,13 @@ public class Main extends Application {
 	{		
 		gpAnswers.getChildren().removeAll(spRAnswer, spWAnswer1, spWAnswer2, spWAnswer3);
 		
-		iRandom = (int) (Math.random() * mediumQuestionList.getLength());
-		Question.setText(mediumQuestionList.getQuestion(iRandom).getQuestion());
-		lbRAnswer.setText(mediumQuestionList.getQuestion(iRandom).getCorrectAnswer());
-		lbWAnswer1.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer1());
-		lbWAnswer2.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer2());
-		lbWAnswer3.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer3());
+		iRandom = (int) (Math.random() * easyQuestionList.getLength());
+		
+		Question.setText(easyQuestionList.getQuestion(iRandom).getQuestion());
+		lbRAnswer.setText(easyQuestionList.getQuestion(iRandom).getCorrectAnswer());
+		lbWAnswer1.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer1());
+		lbWAnswer2.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer2());
+		lbWAnswer3.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer3());
 		lbBHint.setText("Click here for a hint");
 		
 		int iRAnswerpos = (int) (Math.random() * 4) + 1;
