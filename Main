@@ -47,27 +47,33 @@ public class Main extends Application {
 
 	static Label Question = new Label();
 	Rectangle baQuestion = new Rectangle(500, 100);
+	Rectangle reQuestionb = new Rectangle(505, 105);
 	static StackPane spQuestion = new StackPane();
 
 	Rectangle reHint = new Rectangle(180, 30);
+	Rectangle reHintb = new Rectangle(185, 35);
 	static Label lbBHint = new Label("Click here for a hint");
 	static StackPane spHint = new StackPane();
 	Label lbHint = new Label();
 
 	Rectangle reRAnswer = new Rectangle(180, 30);
+	Rectangle reRAnswerb = new Rectangle(185, 35);
 	static Label lbRAnswer = new Label();
 	static StackPane spRAnswer = new StackPane();
 	int ifClick = 0;
 
 	Rectangle reWAnswer1 = new Rectangle(180, 30);
+	Rectangle reWAnswer1b = new Rectangle(185, 35);
 	static Label lbWAnswer1 = new Label();
 	static StackPane spWAnswer1 = new StackPane();
 
 	Rectangle reWAnswer2 = new Rectangle(180, 30);
+	Rectangle reWAnswer2b = new Rectangle(185, 35);
 	static Label lbWAnswer2 = new Label();
 	static StackPane spWAnswer2 = new StackPane();
 
 	Rectangle reWAnswer3 = new Rectangle(180, 30);
+	Rectangle reWAnswer3b = new Rectangle(185, 35);
 	static Label lbWAnswer3 = new Label();
 	static StackPane spWAnswer3 = new StackPane();
 
@@ -106,13 +112,20 @@ public class Main extends Application {
 		reWAnswer3.setFill(Color.LIGHTGRAY);
 		reHint.setFill(Color.LIGHTGRAY);
 		reNextQuest.setFill(Color.LIGHTGRAY);
+		
+		reRAnswerb.setFill(Color.ROYALBLUE.saturate());
+		reWAnswer1b.setFill(Color.ROYALBLUE.saturate());
+		reWAnswer2b.setFill(Color.ROYALBLUE.saturate());
+		reWAnswer3b.setFill(Color.ROYALBLUE.saturate());
+		reHintb.setFill(Color.ROYALBLUE.saturate());
+		reQuestionb.setFill(Color.ALICEBLUE.ROYALBLUE.saturate());
 
-		spQuestion.getChildren().addAll(baQuestion, Question);
-		spRAnswer.getChildren().addAll(reRAnswer, lbRAnswer);
-		spWAnswer1.getChildren().addAll(reWAnswer1, lbWAnswer1);
-		spWAnswer2.getChildren().addAll(reWAnswer2, lbWAnswer2);
-		spWAnswer3.getChildren().addAll(reWAnswer3, lbWAnswer3);
-		spHint.getChildren().addAll(reHint, lbBHint);
+		spQuestion.getChildren().addAll(reQuestionb, baQuestion, Question);
+		spRAnswer.getChildren().addAll(reRAnswerb, reRAnswer, lbRAnswer);
+		spWAnswer1.getChildren().addAll(reWAnswer1b, reWAnswer1, lbWAnswer1);
+		spWAnswer2.getChildren().addAll(reWAnswer2b, reWAnswer2, lbWAnswer2);
+		spWAnswer3.getChildren().addAll(reWAnswer3b, reWAnswer3, lbWAnswer3);
+		spHint.getChildren().addAll(reHintb, reHint, lbBHint);
 		spNextQuest.getChildren().addAll(reNextQuest, lbNextQuest); spNextQuest.setOpacity(0);
 
 		hbScore.setAlignment(Pos.CENTER);
@@ -136,6 +149,7 @@ public class Main extends Application {
 		window.setY(primaryScreenBounds.getMinY());
 		window.setWidth(primaryScreenBounds.getWidth());
 		window.setHeight(primaryScreenBounds.getHeight());
+		window.setTitle("Note to remember: Set title");
 		window.show();
 
 		spRAnswer.setOnMouseClicked(e->
@@ -197,8 +211,6 @@ public class Main extends Application {
 				reWAnswer1.setFill(Color.RED);
 				reWAnswer2.setFill(Color.RED);
 				reWAnswer3.setFill(Color.RED);
-
-				java.awt.Toolkit.getDefaultToolkit().beep();
 
 				spNextQuest.setOpacity(100);
 			}
