@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -90,7 +92,7 @@ public class Main extends Application {
 	{		
 		addEasyQuestion("Fråga1", "Ja", "k", "Nej", "Okej", "XDDDDDDDDD");
 		addEasyQuestion("Fråga2", "ja", "69", "ok", "420", "1337");
-		
+
 		lbRAnswer.setFont(Font.font("Stencil", 14));
 		lbWAnswer1.setFont(Font.font("Stencil", 14));
 		lbWAnswer2.setFont(Font.font("Stencil", 14));
@@ -112,13 +114,13 @@ public class Main extends Application {
 		reWAnswer3.setFill(Color.LIGHTGRAY);
 		reHint.setFill(Color.LIGHTGRAY);
 		reNextQuest.setFill(Color.LIGHTGRAY);
-		
+
 		reRAnswerb.setFill(Color.ROYALBLUE.saturate());
 		reWAnswer1b.setFill(Color.ROYALBLUE.saturate());
 		reWAnswer2b.setFill(Color.ROYALBLUE.saturate());
 		reWAnswer3b.setFill(Color.ROYALBLUE.saturate());
 		reHintb.setFill(Color.ROYALBLUE.saturate());
-		reQuestionb.setFill(Color.ALICEBLUE.ROYALBLUE.saturate());
+		reQuestionb.setFill(Color.ROYALBLUE.saturate());
 
 		spQuestion.getChildren().addAll(reQuestionb, baQuestion, Question);
 		spRAnswer.getChildren().addAll(reRAnswerb, reRAnswer, lbRAnswer);
@@ -139,7 +141,7 @@ public class Main extends Application {
 		vbMain.getChildren().addAll(spQuestion, gpAnswers, spHint, spNextQuest, hbScore);
 		Scene scMain = new Scene(vbMain, 1000, 680);
 		scMain.setFill(Color.DARKBLUE);
-		
+
 		getNewQuestion();
 
 		window.setScene(scMain);
@@ -159,10 +161,10 @@ public class Main extends Application {
 				ifClick++;
 				Score++;
 				lbScore.setText("Your score is: " + Score);
-				
-				if(Score % 5 == 0)
+
+				if(Score % 5 == 0 && Score > 40)
 					iDiff++;
-				
+
 				if(iDiff == 1)
 				{
 					lbDifficulty.setText("Medium");
@@ -205,7 +207,7 @@ public class Main extends Application {
 					DiffColour = Color.rgb(255, 0, 7);
 					lbDifficulty.setTextFill(DiffColour);
 				}
-					
+
 
 				reRAnswer.setFill(Color.GREEN.brighter());
 				reWAnswer1.setFill(Color.RED);
@@ -216,11 +218,26 @@ public class Main extends Application {
 			}
 		});
 		
+		spWAnswer1.setOnMouseClicked(e->
+		{
+			WrongAnswer();
+		});
+		
+		spWAnswer2.setOnMouseClicked(e->
+		{
+			WrongAnswer();
+		});
+		
+		spWAnswer3.setOnMouseClicked(e->
+		{
+			WrongAnswer();
+		});
+
 		spHint.setOnMouseClicked(e->
 		{
 			lbBHint.setText(easyQuestionList.getQuestion(iRandom).getHint());
 		});
-		
+
 		spNextQuest.setOnMouseClicked(e->
 		{
 			ifClick = 0;
@@ -229,7 +246,7 @@ public class Main extends Application {
 			reWAnswer1.setFill(Color.LIGHTGRAY);
 			reWAnswer2.setFill(Color.LIGHTGRAY);
 			reWAnswer3.setFill(Color.LIGHTGRAY);
-			
+
 			getNewQuestion();
 		});
 	}
@@ -237,40 +254,114 @@ public class Main extends Application {
 	private static void getNewQuestion()
 	{		
 		gpAnswers.getChildren().removeAll(spRAnswer, spWAnswer1, spWAnswer2, spWAnswer3);
-		
+
 		iRandom = (int) (Math.random() * easyQuestionList.getLength());
-		
-		Question.setText(easyQuestionList.getQuestion(iRandom).getQuestion());
-		lbRAnswer.setText(easyQuestionList.getQuestion(iRandom).getCorrectAnswer());
-		lbWAnswer1.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer1());
-		lbWAnswer2.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer2());
-		lbWAnswer3.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer3());
-		lbBHint.setText("Click here for a hint");
-		
+
+		if(iDiff == 0)
+		{
+			Question.setText(easyQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(easyQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(easyQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+
+		if(iDiff == 1)
+		{
+			Question.setText(mediumQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(mediumQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(mediumQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 2)
+		{
+			Question.setText(difficultQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(difficultQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(difficultQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(difficultQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(difficultQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 3)
+		{
+			Question.setText(hardQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(hardQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(hardQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(hardQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(hardQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 4)
+		{
+			Question.setText(veryhardQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(veryhardQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(veryhardQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(veryhardQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(veryhardQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 5)
+		{
+			Question.setText(expertQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(expertQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(expertQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(expertQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(expertQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 6)
+		{
+			Question.setText(impossibleQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(impossibleQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(impossibleQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(impossibleQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(impossibleQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
+		if(iDiff == 7)
+		{
+			Question.setText(lolnopeQuestionList.getQuestion(iRandom).getQuestion());
+			lbRAnswer.setText(lolnopeQuestionList.getQuestion(iRandom).getCorrectAnswer());
+			lbWAnswer1.setText(lolnopeQuestionList.getQuestion(iRandom).getWrongAnswer1());
+			lbWAnswer2.setText(lolnopeQuestionList.getQuestion(iRandom).getWrongAnswer2());
+			lbWAnswer3.setText(lolnopeQuestionList.getQuestion(iRandom).getWrongAnswer3());
+			lbBHint.setText("Click here for a hint");
+		}
+
 		int iRAnswerpos = (int) (Math.random() * 4) + 1;
 		System.out.println(iRAnswerpos + " posR");
-		
+
 		int iWAnswerpos1 = (int) (Math.random() * 4) + 1;
 		while(iWAnswerpos1 == iRAnswerpos)
 		{
 			System.out.println(iWAnswerpos1 + " pos1");
 			iWAnswerpos1 = (int) (Math.random() * 4) + 1;
 		}
-		
+
 		int iWAnswerpos2 = (int) (Math.random() * 4) + 1;
 		while(iWAnswerpos2 == iRAnswerpos || iWAnswerpos2 == iWAnswerpos1)
 		{
 			System.out.println(iWAnswerpos2 + " pos2");
 			iWAnswerpos2 = (int) (Math.random() * 4) + 1;
 		}
-		
+
 		int iWAnswerpos3 = (int) (Math.random() * 4) + 1;
 		while(iWAnswerpos3 == iRAnswerpos || iWAnswerpos3 == iWAnswerpos1 || iWAnswerpos3 == iWAnswerpos2)
 		{
 			System.out.println(iWAnswerpos3 + " pos3");
 			iWAnswerpos3 = (int) (Math.random() * 4) + 1;
 		}
-		
+
 		if(iRAnswerpos == 1)
 			gpAnswers.add(spRAnswer, 0, 0);
 		if(iRAnswerpos == 2)
@@ -279,7 +370,7 @@ public class Main extends Application {
 			gpAnswers.add(spRAnswer, 1, 0);
 		if(iRAnswerpos == 4)
 			gpAnswers.add(spRAnswer, 1, 1);
-		
+
 		if(iWAnswerpos1 == 1)
 			gpAnswers.add(spWAnswer1, 0, 0);
 		if(iWAnswerpos1 == 2)
@@ -288,7 +379,7 @@ public class Main extends Application {
 			gpAnswers.add(spWAnswer1, 1, 0);
 		if(iWAnswerpos1 == 4)
 			gpAnswers.add(spWAnswer1, 1, 1);
-		
+
 		if(iWAnswerpos2 == 1)
 			gpAnswers.add(spWAnswer2, 0, 0);
 		if(iWAnswerpos2 == 2)
@@ -297,7 +388,7 @@ public class Main extends Application {
 			gpAnswers.add(spWAnswer2, 1, 0);
 		if(iWAnswerpos2 == 4)
 			gpAnswers.add(spWAnswer2, 1, 1);
-		
+
 		if(iWAnswerpos3 == 1)
 			gpAnswers.add(spWAnswer3, 0, 0);
 		if(iWAnswerpos3 == 2)
@@ -305,45 +396,63 @@ public class Main extends Application {
 		if(iWAnswerpos3 == 3)
 			gpAnswers.add(spWAnswer3, 1, 0);
 		if(iWAnswerpos3 == 4)
-			gpAnswers.add(spWAnswer3, 1, 1);
-		
+			gpAnswers.add(spWAnswer3, 1, 1);	
+	}
+
+	public void WrongAnswer(){
+		if(ifClick == 0)
+		{
+			ifClick++;
+
+			reWAnswer1.setFill(Color.RED);
+			reWAnswer2.setFill(Color.RED);
+			reWAnswer3.setFill(Color.RED);
+			reRAnswer.setFill(Color.GREEN.brighter());
+			final Timeline timeline = new Timeline(new KeyFrame((javafx.util.Duration.seconds(1)),e->{
+				System.out.println("lul");
+
+			}));
+			timeline.setCycleCount(1);
+			timeline.setDelay(javafx.util.Duration.seconds(10));
+			timeline.playFromStart();
+		}
 	}
 
 	private void addEasyQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		easyQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addMediumQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		mediumQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addDifficultQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		difficultQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addHardQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		hardQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addVeryhardQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		veryhardQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addExpertQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		expertQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addImpossibleQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		impossibleQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
 	}
-	
+
 	private void addLolnopeQuestion(String Question, String correctAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String hint)
 	{
 		lolnopeQuestionList.addQuestion(Question, correctAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3, hint);
